@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+        <data>
+
+            <variable
+                name="item"
+                type="com.example.github.domain.models.GitHubItem" />
+
+            <variable
+                name="listener"
+                type="com.example.github.ui.adapter.item.ItemAdapter.OnItemClickListener" />
+
+        </data>
+
+    <LinearLayout
+        android:layout_margin="8dp"
+        android:background="@drawable/shape_bg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="@{(view) -> listener.onItemClick(view, item)}"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:layout_gravity="start"
+                android:padding="16dp"
+                android:text="text" />
+
+            <TextView
+                android:id="@+id/forks"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:padding="16dp"
+                android:textColor="@color/yellow"
+                android:textSize="16sp" />
+
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/desc"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:src="@drawable/baseline_search_24" />
+
+
+    </LinearLayout>
+</layout>

@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">github</string>
+    <string name="main_profile">Profile</string>
+    <string name="main_repositories">Repository list</string>
+    <string name="auth_login">Open</string>
+    <string name="auth_canceled">Authentication fail</string>
+    <string name="all">All</string>
+    <string name="starred">Starred</string>
+    <string name="fail">"Something went wrong"</string>
+    <string name="some_error_mas">some error mas</string>
+    <string name="try_agein">try agein</string>
+
+</resources>
