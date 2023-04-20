@@ -11,15 +11,19 @@ import javax.inject.Inject
 
 class ContentRepositoryImpl @Inject constructor(
     private val api: Api
-): ContentRepository {
-    override suspend fun getContent(owner: String, repo: String, path: String?): List<Content> {
-            return withContext(Dispatchers.IO) {
-//                try {
-                    api.getRepoContent(owner, repo, path).toContent()
-//                } catch (e: Exception) {
-//                    Log.d("CONTENTERROR", e.toString())
-//                    emptyList()
-//                }
+) : ContentRepository {
+    override suspend fun getContent(
+        owner: String,
+        repo: String,
+        path: String?
+    ): com.example.github.domain.models.Result<Any> {
+        return withContext(Dispatchers.IO) {
+            try {
+                val result = api.getRepoContent(owner, repo, path).toContent()
+                com.example.github.domain.models.Result.Success(result)
+            } catch (e: Exception) {
+                com.example.github.domain.models.Result.Error(e.message.toString())
             }
+        }
     }
 }

@@ -1,15 +1,13 @@
 package com.example.github.domain.repository
 
-import com.example.github.data.models.ContentDTO
-import com.example.github.data.models.RepositoryDTO
-import com.example.github.data.models.UserDTO
 import com.example.github.domain.models.GitHubItem
+import com.example.github.domain.models.Result
 
 interface ListRepository {
 
-    suspend fun getUsers(title: String): List<GitHubItem.User>
+    suspend fun getUsers(title: String): Result<Any>
 
-    suspend fun getRepositories(title: String): List<GitHubItem.Repository>
+    suspend fun getRepositories(title: String): Result<Any>
 
 
 }

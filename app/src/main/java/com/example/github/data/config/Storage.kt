@@ -1,4 +1,4 @@
-package com.example.github.domain.config
+package com.example.github.data.config
 
 object Storage {
     fun getAccessToken(): String {

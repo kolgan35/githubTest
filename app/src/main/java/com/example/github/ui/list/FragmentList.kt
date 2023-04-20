@@ -14,7 +14,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.github.R
-import com.example.github.domain.config.Storage.ACCESS_TOKEN
+import com.example.github.data.config.Storage.ACCESS_TOKEN
 import com.example.github.databinding.FragmentListBinding
 import com.example.github.domain.models.GitHubItem
 import com.example.github.domain.models.TypeItem

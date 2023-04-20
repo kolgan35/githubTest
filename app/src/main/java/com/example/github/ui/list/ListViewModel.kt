@@ -39,17 +39,33 @@ class ListViewModel @Inject constructor(
             kotlin.runCatching {
                 _searchLive.postValue(true)
                 val getUserTask = async {
-                    blockTry {
-                        usersUseCase.execute(title)
+                    val result = usersUseCase.execute(title)
+                    when (result) {
+                        is com.example.github.domain.models.Result.Success<*> -> {
+                            val r = result.data as List<GitHubItem.User>
+                            r.sortedBy { it.login }
+                        }
+                        is com.example.github.domain.models.Result.Error -> {
+                            _failLive.postValue(Pair(result.message, true))
+                            emptyList()
+                        }
                     }
                 }
                 val getRepoTask = async {
-                    blockTry {
-                        repoUseCase.execute(title)
+                    val result = repoUseCase.execute(title)
+                    when (result) {
+                        is com.example.github.domain.models.Result.Success<*> -> {
+                            val r = result.data as List<GitHubItem.Repository>
+                            r.sortedBy { it.name }
+                        }
+                        is com.example.github.domain.models.Result.Error -> {
+                            _failLive.postValue(Pair(result.message, true))
+                            emptyList()
+                        }
                     }
                 }
-                val users = getUserTask.await().sortedBy { it.login }
-                val repos = getRepoTask.await().sortedBy { it.name }
+                val users = getUserTask.await()
+                val repos = getRepoTask.await()
 
                 val resultList = mutableListOf<GitHubItem>()
 
@@ -59,18 +75,9 @@ class ListViewModel @Inject constructor(
             }.onSuccess {
                 _searchLive.postValue(false)
             }.onFailure {
-                _failLive.postValue(Pair(it.message?: "", true))
+                _failLive.postValue(Pair(it.message ?: "", true))
                 _searchLive.postValue(false)
             }
-        }
-    }
-
-    private suspend fun <T> blockTry(block: suspend () -> List<T>): List<T> {
-        return try {
-            block.invoke()
-        } catch (e: Exception) {
-            _failLive.postValue(Pair(e.message?: "", true))
-            emptyList()
         }
     }
 

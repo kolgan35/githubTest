@@ -6,6 +6,7 @@ import com.example.github.data.repository.ListRepositoryImpl
 import com.example.github.domain.repository.AuthRepository
 import com.example.github.domain.repository.ContentRepository
 import com.example.github.domain.repository.ListRepository
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -13,20 +14,14 @@ import dagger.hilt.android.components.ViewModelComponent
 
 @Module
 @InstallIn(ViewModelComponent::class)
-class RepositoryModule {
+abstract class RepositoryModule {
 
-    @Provides
-    fun provideListRepo(repo: ListRepositoryImpl): ListRepository {
-        return repo
-    }
-    @Provides
-    fun provideContentRepo(repo: ContentRepositoryImpl): ContentRepository {
-        return repo
-    }
+    @Binds
+    abstract fun provideListRepo(repo: ListRepositoryImpl): ListRepository
+    @Binds
+    abstract fun provideContentRepo(repo: ContentRepositoryImpl): ContentRepository
 
-    @Provides
-    fun provideAuthRepo(repo: AuthRepositoryImpl): AuthRepository {
-        return repo
-    }
+    @Binds
+    abstract fun provideAuthRepo(repo: AuthRepositoryImpl): AuthRepository
 
 }

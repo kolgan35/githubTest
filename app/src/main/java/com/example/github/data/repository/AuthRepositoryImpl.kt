@@ -1,8 +1,8 @@
 package com.example.github.data.repository
 
 import android.net.Uri
-import com.example.github.domain.config.AuthConfig
-import com.example.github.domain.config.Storage
+import com.example.github.data.config.AuthConfig
+import com.example.github.data.config.Storage
 import com.example.github.domain.repository.AuthRepository
 import net.openid.appauth.AuthorizationRequest
 import net.openid.appauth.AuthorizationService

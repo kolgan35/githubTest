@@ -1,6 +1,6 @@
 package com.example.github.data.networking
 
-import com.example.github.domain.config.Storage
+import com.example.github.data.config.Storage
 import okhttp3.Interceptor
 import okhttp3.Response
 

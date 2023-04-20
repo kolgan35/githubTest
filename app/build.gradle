@@ -24,6 +24,11 @@ android {
         manifestPlaceholders = [appAuthRedirectScheme: 'github']
         buildConfigField("String", "CLIENT_SECRET", apikeyProperties['CLIENT_SECRET'])
         buildConfigField("String", "CLIENT_ID", apikeyProperties['CLIENT_ID'])
+        buildConfigField("String", "AUTH_URI", apikeyProperties['AUTH_URI'])
+        buildConfigField("String", "TOKEN_URI", apikeyProperties['TOKEN_URI'])
+        buildConfigField("String", "SCOPE", apikeyProperties['SCOPE'])
+        buildConfigField("String", "CALLBACK_URL", apikeyProperties['CALLBACK_URL'])
+
     }
 
     buildTypes {

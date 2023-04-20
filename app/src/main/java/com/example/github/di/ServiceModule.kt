@@ -1,7 +1,7 @@
 package com.example.github.di
 
 import com.example.github.data.networking.Api
-import com.example.github.domain.config.Storage
+import com.example.github.data.config.Storage
 import com.example.github.data.networking.TokenInterceptor
 import dagger.Module
 import dagger.Provides
@@ -12,6 +12,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.create
+import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 @Module
@@ -20,22 +21,27 @@ class ServiceModule {
 
     @Provides
     @Singleton
-    fun provideApi(): Api {
-
-        val okHttpClient = OkHttpClient.Builder()
+    fun provideOkHttpClient(): OkHttpClient {
+        return OkHttpClient.Builder()
             .addInterceptor(TokenInterceptor(Storage))
             .addNetworkInterceptor(
                 HttpLoggingInterceptor()
                     .setLevel(HttpLoggingInterceptor.Level.BODY)
             )
-
             .build()
-        val retrofit = Retrofit.Builder()
+    }
+
+    @Provides
+    @Singleton
+    fun providesRetrofit(okHttpClient: OkHttpClient): Retrofit {
+        return Retrofit.Builder()
             .baseUrl("https://api.github.com/")
             .client(okHttpClient)
             .addConverterFactory(MoshiConverterFactory.create())
             .build()
-
-        return retrofit.create()
     }
+    
+    @Provides
+    @Singleton
+    fun providesApi(retrofit: Retrofit): Api = retrofit.create()
 }

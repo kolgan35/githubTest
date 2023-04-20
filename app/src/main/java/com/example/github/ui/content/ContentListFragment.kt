@@ -32,14 +32,9 @@ class ContentListFragment : Fragment(R.layout.fragment_content_list),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView()
-        if (viewModel.dirStack.size < 1) {
-            viewModel.pushDir("")
-            val path = viewModel.peepDir()
-            viewModel.getContent(args.owner, args.repo, path)
-        } else {
-            val path = viewModel.peepDir()
-            viewModel.getContent(args.owner, args.repo, path)
-        }
+        if (viewModel.dirStack.size < 1) viewModel.pushDir("")
+        val path = viewModel.peepDir()
+        viewModel.getContent(args.owner, args.repo, path)
         handleData()
         onBackPressed()
         handleClick()
@@ -57,6 +52,7 @@ class ContentListFragment : Fragment(R.layout.fragment_content_list),
             }
         }
     }
+
     private fun handleClick() {
         binding.tryAgeinBtn.setOnClickListener {
             if (viewModel.dirStack.size < 1) {
@@ -85,16 +81,10 @@ class ContentListFragment : Fragment(R.layout.fragment_content_list),
             contentAdapter.submitList(it)
         }
         viewModel.failLive.observe(viewLifecycleOwner) {
-            if (it.second) {
-                binding.errMsg.text = it.first
-                binding.tryAgeinBtn.isGone = false
-                binding.errMsg.isGone = false
-                binding.rv.isGone = true
-            } else {
-                binding.rv.isGone = false
-                binding.tryAgeinBtn.isGone = true
-                binding.errMsg.isGone = true
-            }
+            if (it.second)  binding.errMsg.text = it.first
+            binding.tryAgeinBtn.isGone = !it.second
+            binding.errMsg.isGone = !it.second
+            binding.rv.isGone = it.second
 
         }
     }
